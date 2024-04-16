@@ -58,6 +58,40 @@ showModalButton.addEventListener("click", (event) => {
     modal.style.display = "block";
     const padezh = getPadezh(fieldSetsCount);
     modalParagraph.textContent = `Заказ принят! Вы заказали ${fieldSetsCount} ${padezh}.`;
+
+    document.getElementsByClassName("modal")[0].style.setProperty("display", "flex");
+    let tbody = document.getElementsByClassName("modal")[0].getElementsByTagName("tbody")[0];
+    tbody.innerHTML = "";
+    const translateToRussian = {"usual": "обычное", "no-fat": "обезжиренное", "soy": "соевое", "coconut": "кокосовое"};
+    for (let fieldset of fieldSetElements) {
+        let tr = document.createElement("tr");
+        let td1 = document.createElement("td");
+        td1.innerText = fieldset.getElementsByTagName("select")[0].selectedOptions[0].textContent;
+        let td2 = document.createElement("td");
+        fieldset.querySelectorAll('input[type="radio"]').forEach((x) => {
+            if (x.checked) {
+                td2.innerText = translateToRussian[x.value];
+            }
+        });
+        let td3 = document.createElement("td");
+        fieldset.querySelectorAll('input[type="checkbox"]').forEach((x) => {
+            if (x.checked) {
+                if (td3.innerText.length !== 0) {
+                    td3.innerText += ", ";
+                }
+                td3.innerText += x.parentElement.querySelector('span').textContent;
+            }
+        });
+
+        let td4 = document.createElement("td");
+        td4.innerText = fieldset.getElementsByClassName("comment")[0].textContent;
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        tbody.appendChild(tr);
+    }
 });
 
 closeBtn.addEventListener("click", () => {
