@@ -36,3 +36,15 @@ function deleteFieldSet(element) {
 }
 
 document.getElementsByClassName("add-button")[0].addEventListener("click", () => createFieldSet());
+
+const showModalButton = document.getElementById('showModal');
+const modal = document.getElementById('modal');
+const closeBtn = document.querySelector('.close');
+
+showModalButton.addEventListener('click', function (event) {
+    event.preventDefault();
+});
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
