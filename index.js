@@ -37,14 +37,30 @@ function deleteFieldSet(element) {
 
 document.getElementsByClassName("add-button")[0].addEventListener("click", () => createFieldSet());
 
+function getPadezh(i) {
+    let mod = i % 100;
+    if (mod % 10 >= 5 || mod % 10 === 0 || [11, 12, 13, 14].includes(mod)) {
+        return "напитков";
+    }
+    else if (mod % 10 > 1 && mod % 10 <= 4) {
+        return "напитка";
+    }
+    return "напиток";
+}
+
 const showModalButton = document.getElementById('showModal');
-const modal = document.getElementById('modal');
-const closeBtn = document.querySelector('.close');
+const modal = document.getElementById("modal");
+const closeBtn = document.querySelector(".close");
+const modalParagraph = modal.querySelector("p");
 
-showModalButton.addEventListener('click', function (event) {
+showModalButton.addEventListener("click", (event) => {
     event.preventDefault();
+    modal.style.display = "block";
+    const padezh = getPadezh(fieldSetsCount);
+    modalParagraph.textContent = `Заказ принят! Вы заказали ${fieldSetsCount} ${padezh}.`;
 });
 
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+}); 
+
